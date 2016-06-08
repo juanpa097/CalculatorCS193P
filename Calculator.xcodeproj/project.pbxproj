@@ -35,6 +35,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB266CDC1D08C5DC00E744AA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EBFC10D91D08BDFB00938D51 /* AppDelegate.swift */,
+				EBFC10E01D08BDFB00938D51 /* Assets.xcassets */,
+				EBFC10E21D08BDFC00938D51 /* LaunchScreen.storyboard */,
+				EBFC10E51D08BDFC00938D51 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		EBFC10CD1D08BDFB00938D51 = {
 			isa = PBXGroup;
 			children = (
@@ -54,12 +65,9 @@
 		EBFC10D81D08BDFB00938D51 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				EBFC10D91D08BDFB00938D51 /* AppDelegate.swift */,
 				EBFC10DB1D08BDFB00938D51 /* ViewController.swift */,
 				EBFC10DD1D08BDFB00938D51 /* Main.storyboard */,
-				EBFC10E01D08BDFB00938D51 /* Assets.xcassets */,
-				EBFC10E21D08BDFC00938D51 /* LaunchScreen.storyboard */,
-				EBFC10E51D08BDFC00938D51 /* Info.plist */,
+				EB266CDC1D08C5DC00E744AA /* Supporting Files */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 				EBFC10EA1D08BDFC00938D51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
