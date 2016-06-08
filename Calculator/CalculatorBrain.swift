@@ -11,9 +11,11 @@ import Foundation
 class CalculatorBrain {
     
     private var accumulator = 0.0
+    private var internalProgram = [AnyObject] () // Double if is an operand string if is an operation
     
     func setOperand (operand: Double)  {
         accumulator = operand
+        internalProgram.append(operand) // The dridgeing makes this work!
     }
     
     private var operations: Dictionary <String,Operation> = [
@@ -41,6 +43,7 @@ class CalculatorBrain {
     }
     
     func performOperantion (symbol: String) {
+        internalProgram.append(symbol)
         if let operation = operations [symbol] {
             switch operation {
             case .Constant (let value) :
@@ -53,8 +56,7 @@ class CalculatorBrain {
             case .Equals:
                 executePendingBinaryOperation()
             case .ClearDisplay:
-                setOperand(0.0)
-                pending = nil
+                clear()
             }
         }
     }
@@ -64,6 +66,32 @@ class CalculatorBrain {
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
             pending = nil
         }
+    }
+    
+    typealias PropertyList = AnyObject // We do this for documentation
+    
+    var program: PropertyList {
+        get {
+            return internalProgram // Returns a copy of my array, not The array
+        }
+        set {
+            clear()
+            if let arrayOfOps = newValue as? [AnyObject] { // Cast to array of AnyObject
+                for op in arrayOfOps {
+                    if let operand = op as? Double { // Tries to cast the element into a Double
+                        setOperand(operand)
+                    } else if let operation = op as? String {
+                        performOperantion(operation)
+                    }
+                }
+            }
+        }
+    }
+    
+    func clear () {
+        accumulator = 0.0
+        pending = nil
+        internalProgram.removeAll()
     }
     
     private var pending: PendingBinaryOperationInfo?

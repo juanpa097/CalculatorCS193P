@@ -257,11 +257,11 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="133" height="69"/>
                                                         <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <state key="normal" title="cos">
+                                                        <state key="normal" title="save">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lnm-v3-2xi"/>
+                                                            <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TUb-w1-1SR"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uab-gC-Al4">
@@ -373,14 +373,14 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="133" height="69"/>
                                                         <color key="backgroundColor" red="0.41910290230000002" green="0.71813608630000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <state key="normal" title="e">
+                                                        <state key="normal" title="restore">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <variation key="heightClass=compact" misplaced="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="133" height="41"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2MK-fk-snm"/>
+                                                            <action selector="restore:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gsf-yf-mz0"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEc-9O-OvZ">
