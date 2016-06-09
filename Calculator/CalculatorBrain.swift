@@ -12,6 +12,7 @@ class CalculatorBrain {
     
     private var accumulator = 0.0
     private var internalProgram = [AnyObject] () // Double if is an operand string if is an operation
+    //private var description = ""
     
     func setOperand (operand: Double)  {
         accumulator = operand

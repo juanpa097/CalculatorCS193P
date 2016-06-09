@@ -61,9 +61,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func addFlotingPoint(sender: UIButton) {
-        let decimalRemainder = displayValue - floor(displayValue)
-        if decimalRemainder == 0 {
-            touchDigit(sender)
+        if let currentTittle = display!.text {
+            if (currentTittle.rangeOfString(".") == nil) {
+                touchDigit(sender)
+            }
         }
     }
     
