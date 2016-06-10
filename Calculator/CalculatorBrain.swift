@@ -12,7 +12,7 @@ class CalculatorBrain {
     
     private var accumulator = 0.0
     private var internalProgram = [AnyObject] () // Double if is an operand string if is an operation
-    private var description = ""
+    var description = ""
     private var isEqualPressed = false
     private var accumulatorAlreadyAppended = false
     private var unitaryOperationPerformed = false
@@ -122,6 +122,16 @@ class CalculatorBrain {
         if (pending != nil) {
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
             pending = nil
+        }
+    }
+    
+    var isPartialResult: Bool {
+        get {
+            if pending == nil {
+                return false
+            } else {
+                return true
+            }
         }
     }
     

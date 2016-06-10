@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet private weak var display: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     private var userIsInTheMiddleOfTyping = false;
     
@@ -27,7 +28,11 @@ class ViewController: UIViewController {
     
     private var displayValue: Double {
         get {
-            return Double (display.text!)!
+            if let currentValue = Double (display.text!) {
+                return currentValue
+            } else {
+                return 0.0
+            }
         }
         set {
             display.text = String(newValue)
@@ -56,13 +61,22 @@ class ViewController: UIViewController {
         }
         if let mathSymbol = sender.currentTitle {
             brain.performOperantion(mathSymbol)
+            if brain.isPartialResult {
+                descriptionLabel.text = brain.description + "..."
+            } else {
+                descriptionLabel.text = brain.description + "="
+            }
+            if mathSymbol == "AC" {
+                descriptionLabel.text = " "
+            }
         }
+        
         displayValue = brain.result
     }
     
     @IBAction private func addFlotingPoint(sender: UIButton) {
         if let currentTittle = display!.text {
-            if (currentTittle.rangeOfString(".") == nil) {
+            if (currentTittle.rangeOfString(".") == nil || !userIsInTheMiddleOfTyping) {
                 touchDigit(sender)
             }
         }
