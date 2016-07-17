@@ -15,7 +15,7 @@ class GraphViewController: UIViewController {
         didSet {
             let recognizer = UIPanGestureRecognizer (
                 target: graph,
-                action: #selector(GraphCalculator.panOverGraph(_:))
+                action: #selector(GraphCalculator.panOverGraph(_:)) 
             )
             graph.addGestureRecognizer(recognizer)
         }
