@@ -13,12 +13,15 @@ class CalculatorBrain {
     private var accumulator = 0.0
     private var internalProgram = [AnyObject] () // Double if is an operand string if is an operation
     var description = ""
+    private var temporaryStringAccumulator = ""
     private var isEqualPressed = false
     private var accumulatorAlreadyAppended = false
     private var unitaryOperationPerformed = false
+    private var M = 0.0
     
     func setOperand (operand: Double)  {
         accumulator = operand
+        temporaryStringAccumulator = String(operand)
         internalProgram.append(operand) // The bridgeing makes this work!
         if unitaryOperationPerformed {
             description = ""
@@ -27,21 +30,51 @@ class CalculatorBrain {
         }
     }
     
-    func setDescription (newElement: String) {
+    func setOperand (variableName: String) {
+        var newVaribleValue = variableValues[variableName] ?? 0.0
+        if variableName == "M" {
+            newVaribleValue = M
+        }
+        temporaryStringAccumulator = variableName
+        accumulator = newVaribleValue
+        internalProgram.append(variableName)
+        if unitaryOperationPerformed {
+            description = ""
+            unitaryOperationPerformed = false
+            accumulatorAlreadyAppended = false
+        }
+    }
+    
+    func setVaulueToM (newValueOfM: String) {
+        if let constantValue = Double (newValueOfM) {
+            M = constantValue
+        } else {
+            let newVaribleValue = variableValues[newValueOfM] ?? 0.0
+            M = newVaribleValue
+        }
+        
+    }
+    
+    private var variableValues: Dictionary <String, Double> = [
+        "y" : 10.0,
+        "a" : 20.0,
+        "z" : 2.0,
+    ]
+    
+    private func setDescription (newElement: String) {
         if (newElement != "=") {
             description += newElement
         }
 
     }
     
-    func addUnitaryOperationToDescription (newSymbol: String) -> String {
+    private func addUnitaryOperationToDescription (newSymbol: String) -> String {
         if isEqualPressed && newSymbol != "="{
             description = newSymbol + "(" + description + ")"
             return ""
         } else {
-            return newSymbol + "(" + String(accumulator) + ")"
+            return newSymbol + "(" + String(temporaryStringAccumulator) + ")"
         }
-
     }
 
     private var operations: Dictionary <String,Operation> = [
@@ -76,11 +109,13 @@ class CalculatorBrain {
             case .Constant (let value) :
                 toAppend += symbol
                 accumulator = value
+                temporaryStringAccumulator = String(value)
                 accumulatorAlreadyAppended = true
                 unitaryOperationPerformed = true
             case .UnitaryOperation (let function):
                 toAppend = addUnitaryOperationToDescription(symbol)
                 accumulator = function(accumulator)
+                temporaryStringAccumulator = String(accumulator)
                 accumulatorAlreadyAppended = true
                 unitaryOperationPerformed = true
             case .BinaryOperation(let function):
@@ -93,6 +128,7 @@ class CalculatorBrain {
                 toAppend = getPendingOperator()
                 executePendingBinaryOperation()
                 accumulatorAlreadyAppended = true
+                unitaryOperationPerformed = true
             case .ClearDisplay:
                 clear()
             }
@@ -103,7 +139,7 @@ class CalculatorBrain {
     
     private func getPendingOperator () -> String {
         if (accumulatorAlreadyAppended == false && pending != nil) {
-            return String(accumulator)
+            return String(temporaryStringAccumulator)
         } else {
             return ""
         }
@@ -114,13 +150,14 @@ class CalculatorBrain {
             accumulatorAlreadyAppended = false
             return symbol
         } else {
-            return String(accumulator) + symbol
+            return String(temporaryStringAccumulator) + symbol
         }
     }
     
     private func executePendingBinaryOperation () {
         if (pending != nil) {
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
+            temporaryStringAccumulator = String(accumulator)
             pending = nil
         }
     }
@@ -142,27 +179,37 @@ class CalculatorBrain {
             return internalProgram // Returns a copy of my array, not The array
         }
         set {
+            let previousValueOfMemory = M
             clear()
+            M = previousValueOfMemory
             if let arrayOfOps = newValue as? [AnyObject] { // Cast to array of AnyObject
                 for op in arrayOfOps {
                     if let operand = op as? Double { // Tries to cast the element into a Double
                         setOperand(operand)
                     } else if let operation = op as? String {
-                        performOperantion(operation)
+                        let operationExist = operations[operation] != nil
+                        if operationExist {
+                            performOperantion(operation)
+                        } else {
+                            setOperand(operation)
+                        }
                     }
                 }
             }
+            unitaryOperationPerformed = false
         }
     }
     
-    func clear () {
+    private func clear () {
         accumulator = 0.0
+        temporaryStringAccumulator = ""
         pending = nil
         internalProgram.removeAll()
         description.removeAll()
         isEqualPressed = false // New
         accumulatorAlreadyAppended = false // New
         unitaryOperationPerformed = false
+        M = 0.0
     }
     
     private var pending: PendingBinaryOperationInfo?
